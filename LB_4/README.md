@@ -74,7 +74,62 @@
 
 ![17](https://github.com/vasser2323/BigData/assets/73202398/2a01de68-3b41-4575-89da-cd61b859a633)
 
+## 3) Задача обедающх философов - за круглым столом сидят 5 философов,
+каждый философ имеет перед собой тарелку с едой и вилки, которые лежат на столе между ним и его соседями. 
+Философы по очереди берут две вилки, чтобы начать есть.
 
+Выполнено классическое решение с помощью мьютексов:
 
+Plato: Thinking
+Thales: Thinking
+Pythagoras: Thinking
+Pythagoras: Thinking
+Diogenes: Thinking
+Thales: at the table
+Thales: Picked up left fork
+Plato: at the table
+Plato: Picked up left fork
+Thales : Picked up right fork
+Pythagoras: at the table
+Pythagoras: Picked up left fork
+Diogenes: at the table
+Diogenes: Picked up left fork
+Thales- eating
+Thales: Put down right fork
+Thales: Put down left fork. Back to thinking
+Plato: Picked up right fork
+Thales: Thinking
+Thales: at the table
+Plato - eating
+Plato: Put down right fork
+Plato: Put down left fork. Back to thinking
 
+Скрин выполнения:
 
+![18](https://github.com/vasser2323/BigData/assets/73202398/79aa5692-bbfb-4614-918d-fcea2a574063)
+
+## 4) Двухфазный коммит.
+
+4.1) Фаза подготовки (prepare phase): координатор транзакций отправляет сообщения всем участникам, 
+запрашивая подтверждение возможности выполнения транзакции. Каждый участник сохраняет 
+состояние транзакции и отправляет ответ координатору (commit или abort).
+
+4.2) Фаза коммита. Если все участники подтвердили транзакцию в фазе подготовки, то координатор отправляет 
+commit-сообщения всем участникам, разрешая применени изменений. Каждый участник применяет изменения и отправляет 
+подтверждающий ответ координатору.
+
+Координатор регистрирует транзакционный узел /app/tx
+
+Первая фаза: 
+
+ - Координатор уведомляет исполнителей о транзакции
+ - Координатор подписывается на изменения транзакционного узла (устанавливает WATCH на /app/tx)
+ - Каждый исполнитель создает эфемерных узел /app/tx/node_i с решением commit/abort
+ - Исполнитель подписывается на события своего узла для получения решения от координатора ( вторая фаза )
+
+Вторая фаза:
+
+ - Координатор принимает решение о commit/abort после ожидания таймаута или после создания всех узлов исполнителей с решением commit
+ - Координатор изменяет значение эфемерных узлов для каждого исполнителя на commit / abort
+ - Исполнители применяют / прерывают транзакцию
+ - Исполнители обновляют значение узла на committed
