@@ -12,9 +12,9 @@
 
 ## 3) Hourly tips
 
-![3 1](https://github.com/vasser2323/BigData/assets/73202398/219f0267-baa7-4601-9c1d-c72986ba1b90)
-
 ![3](https://github.com/vasser2323/BigData/assets/73202398/1718fa1d-cded-4abd-b688-b62851229560)
+
+![3 1](https://github.com/vasser2323/BigData/assets/73202398/219f0267-baa7-4601-9c1d-c72986ba1b90)
 
 ## 4) Expiring state
 
